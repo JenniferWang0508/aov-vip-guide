@@ -336,7 +336,7 @@ const CONTENT = {
     },
   },
   en: {
-    langLabel: "英文",
+    langLabel: "English",
     menuLabel: "Menu",
     brand: "VIP Guide",
     brandEn: "AOV 10TH",
