@@ -53,7 +53,7 @@ function render() {
   const changed = shownPage !== "" && shownPage !== page;
   shownPage = page;
   document.documentElement.lang = currentLang() === "en" ? "en" : "zh-Hant";
-  document.title = "傳說對決十周年｜貴賓指引";
+  document.title = "AOV 10th Event | VIP Guide";
   document.getElementById("bar").innerHTML = chrome(c, page);
   document.getElementById("main").innerHTML = pages[page](c);
   const close = document.getElementById("lightbox-close");
