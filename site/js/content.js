@@ -13,10 +13,17 @@ const CONTENT = {
     ],
     close: "關閉",
     zoom: "點圖片可放大",
+    gate5: [
+      { src: "images/gate5-floor.png", alt: "台北大巨蛋 B2 平面圖，標示 Gate 5" },
+      { src: "images/gate5-entrance.png", alt: "Gate 5 入口，右側為 VIP 通道" },
+    ],
     home: {
-      kicker: "傳說對決十週年 夏季總決賽 / 演唱會",
+      kicker: "傳說對決十週年 GCS 夏季總決賽 / 演唱會",
       title: "貴賓指南",
-      when: "2026/10/31｜台北大巨蛋（台北市信義區忠孝東路四段 515 號）",
+      when: [
+        "時間｜2026/10/31（六）",
+        "地點｜台北大巨蛋（台北市信義區忠孝東路四段 515 號）",
+      ],
       cards: [
         {
           href: "#garena",
@@ -33,10 +40,10 @@ const CONTENT = {
       ],
       dayTitle: "活動流程說明",
       timeline: [
-        { kind: "finals", slot: "總決賽", time: "09:30", label: "開始入場" },
-        { kind: "finals", slot: "總決賽", time: "10:30", label: "活動開始" },
-        { kind: "finals", slot: "總決賽", time: "12:00", label: "藝人演出：玖壹壹" },
-        { kind: "finals", slot: "總決賽", time: "15:30", label: "最晚結束時間" },
+        { kind: "finals", slot: "GCS 總決賽", time: "09:30", label: "開始入場" },
+        { kind: "finals", slot: "GCS 總決賽", time: "10:30", label: "活動開始" },
+        { kind: "finals", slot: "GCS 總決賽", time: "12:00", label: "藝人演出：玖壹壹" },
+        { kind: "finals", slot: "GCS 總決賽", time: "15:30", label: "最晚結束時間" },
         { kind: "concert", slot: "演唱會", time: "16:30", label: "Garena 長官貴賓開始入場" },
         { kind: "concert", slot: "演唱會", time: "17:00", label: "其他貴賓 / 合作夥伴開始入場" },
         { kind: "concert", slot: "演唱會", time: "19:00", label: "活動開始" },
@@ -54,7 +61,7 @@ const CONTENT = {
       howTitle: "如何前往",
       name: "台北大巨蛋",
       address: "台北市信義區忠孝東路四段 515 號",
-      map: "開啟地圖",
+      map: "查看地圖",
       mapUrl: "https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%A4%A7%E5%B7%A8%E8%9B%8B",
       taxiTitle: "計程車",
       taxi: "地址：台北市信義區忠孝東路四段 515 號",
@@ -85,8 +92,8 @@ const CONTENT = {
               kind: "list",
               k: "入場方式",
               items: [
-                "於 Gate 5 憑 VIP 證即可入場，現場人員會協助引導至您的座位區",
-                "若您事前會前往台灣辦公室，可找 Henry（chenhe@garena.com）領取 VIP 證；或於活動當天由 Garena 工作人員提供給您",
+                "於 Gate 5 向工作人員報名字領取 VIP 證，憑證即可入場，現場人員會協助引導至您的座位區",
+                "活動期間皆憑 VIP 證入場，請記得隨身攜帶 VIP 證",
               ],
             },
             {
@@ -118,25 +125,23 @@ const CONTENT = {
               kind: "list",
               k: "入場方式",
               items: [
-                "於 Gate 10 憑 VIP 證即可入場，現場人員會協助引導至您的包廂區",
-                "若您事前會前往台灣辦公室，可找 Henry（chenhe@garena.com）領取 VIP 證；或於活動當天由 Garena 工作人員提供給您",
+                "於 Gate 10 向工作人員報名字領取 VIP 證，憑證即可入場，現場人員會協助引導至您的座位區",
+                "活動期間皆憑 VIP 證入場，請記得隨身攜帶 VIP 證",
               ],
             },
             {
-              kind: "table",
+              kind: "list",
+              k: "座位區",
+              items: [
+                "L3 包廂：G01、G11、G18，可洽詢 Henry（chenhe@garena.com）您所屬的包廂",
+                "包廂內皆提供餐食小點",
+              ],
               link: "點擊查看平面圖、包廂照片",
               images: [
                 { src: "images/floor-l3.png", alt: "台北大巨蛋 L3 平面圖" },
                 { src: "images/suite.png", alt: "大包廂內部" },
                 { src: "images/suite-seats.jpg", alt: "包廂外座位" },
               ],
-              headers: ["包廂", "貴賓名單"],
-              rows: [
-                ["G11", "Forrest"],
-                ["G18", "Gang Ye"],
-                ["G01", "Country Head"],
-              ],
-              note: "包廂內皆提供餐食小點",
             },
           ],
         },
@@ -201,7 +206,7 @@ const CONTENT = {
               kind: "list",
               k: "座位區",
               items: [
-                "L3 看台區，具體座位請根據門票資訊入座",
+                "L3 看台區，具體座位請依據您的門票資訊入座",
                 "L3 樓層設有 Lounge 區，提供餐食小點",
               ],
             },
@@ -349,10 +354,17 @@ const CONTENT = {
     ],
     close: "Close",
     zoom: "Tap a photo to enlarge",
+    gate5: [
+      { src: "images/gate5-floor.png", alt: "Taipei Dome B2 floor plan, with Gate 5 marked" },
+      { src: "images/gate5-entrance.png", alt: "Gate 5 entrance, with the VIP passage on the right" },
+    ],
     home: {
-      kicker: "Arena of Valor 10th Anniversary Summer Finals / Concert",
+      kicker: "AOV 10th Anniversary GCS Summer Finals / Concert",
       title: "VIP Guide",
-      when: "October 31, 2026 | Taipei Dome (No. 515, Sec. 4, Zhongxiao E. Rd., Xinyi District, Taipei)",
+      when: [
+        "Time｜October 31, 2026 (Sat)",
+        "Location｜Taipei Dome (No. 515, Sec. 4, Zhongxiao E. Rd., Xinyi District, Taipei)",
+      ],
       cards: [
         {
           href: "#garena",
@@ -369,10 +381,10 @@ const CONTENT = {
       ],
       dayTitle: "Event flow",
       timeline: [
-        { kind: "finals", slot: "Finals", time: "09:30", label: "Doors open" },
-        { kind: "finals", slot: "Finals", time: "10:30", label: "Event begins" },
-        { kind: "finals", slot: "Finals", time: "12:00", label: "Artist: Nine One One" },
-        { kind: "finals", slot: "Finals", time: "15:30", label: "Latest end time" },
+        { kind: "finals", slot: "GCS Finals", time: "09:30", label: "Doors open" },
+        { kind: "finals", slot: "GCS Finals", time: "10:30", label: "Event begins" },
+        { kind: "finals", slot: "GCS Finals", time: "12:00", label: "Artist: Nine One One" },
+        { kind: "finals", slot: "GCS Finals", time: "15:30", label: "Latest end time" },
         { kind: "concert", slot: "Concert", time: "16:30", label: "Garena VIP doors open" },
         { kind: "concert", slot: "Concert", time: "17:00", label: "Other guests / partners doors open" },
         { kind: "concert", slot: "Concert", time: "19:00", label: "Event begins" },
@@ -390,13 +402,13 @@ const CONTENT = {
       howTitle: "Getting there",
       name: "Taipei Dome",
       address: "No. 515, Section 4, Zhongxiao East Road, Xinyi District, Taipei",
-      map: "Open in Maps",
+      map: "View map",
       mapUrl: "https://www.google.com/maps/search/?api=1&query=Taipei+Dome",
       taxiTitle: "Taxi",
       taxi: "Address: No. 515, Section 4, Zhongxiao East Road, Xinyi District, Taipei",
       mrtTitle: "Metro",
       steps: [
-        "Take the Bannan line (Blue line) to Sun Yat-sen Memorial Hall Station.",
+        { before: "Take the Bannan line (Blue line) to ", strong: "Sun Yat-sen Memorial Hall Station", after: "." },
         "Leave through Exit 4 or Exit 5.",
         "Follow the signs through the underground passage, or walk along Section 4 of Zhongxiao East Road, to the venue.",
       ],
@@ -421,8 +433,8 @@ const CONTENT = {
               kind: "list",
               k: "Entry",
               items: [
-                "Enter at Gate 5 with your VIP pass. Staff will guide you to your seats.",
-                "If you visit the Taiwan office beforehand, collect your VIP pass from Henry (chenhe@garena.com). Otherwise, Garena staff will give it to you on the day.",
+                "Check in with staff at Gate 5 and give your name to collect your VIP pass. Enter with the pass. Staff will guide you to your seats.",
+                "Entry requires your VIP pass throughout the event. Please keep it with you.",
               ],
             },
             {
@@ -454,25 +466,23 @@ const CONTENT = {
               kind: "list",
               k: "Entry",
               items: [
-                "Enter at Gate 10 with your VIP pass. Staff will guide you to your suite.",
-                "If you visit the Taiwan office beforehand, collect your VIP pass from Henry (chenhe@garena.com). Otherwise, Garena staff will give it to you on the day.",
+                "Check in with staff at Gate 10 and give your name to collect your VIP pass. Enter with the pass. Staff will guide you to your seats.",
+                "Entry requires your VIP pass throughout the event. Please keep it with you.",
               ],
             },
             {
-              kind: "table",
+              kind: "list",
+              k: "Seats",
+              items: [
+                "L3 suites: G01, G11, and G18. Contact Henry (chenhe@garena.com) to confirm your suite.",
+                "Light refreshments are served in every suite.",
+              ],
               link: "view the floor plan and suite photos",
               images: [
                 { src: "images/floor-l3.png", alt: "Taipei Dome level 3 floor plan" },
                 { src: "images/suite.png", alt: "Inside a large suite" },
                 { src: "images/suite-seats.jpg", alt: "Seats outside the suite" },
               ],
-              headers: ["Suite", "Guest"],
-              rows: [
-                ["G11", "Forrest"],
-                ["G18", "Gang Ye"],
-                ["G01", "Country Head"],
-              ],
-              note: "Light refreshments are served in every suite",
             },
           ],
         },
@@ -537,8 +547,8 @@ const CONTENT = {
               kind: "list",
               k: "Seats",
               items: [
-                "Level 3 stands. Sit according to the information on your ticket.",
-                "The Level 3 floor has a lounge with light refreshments.",
+                "L3 stands. Please sit according to your ticket.",
+                "The L3 floor has a lounge with light refreshments.",
               ],
             },
           ],

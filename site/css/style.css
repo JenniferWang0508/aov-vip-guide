@@ -126,6 +126,13 @@ body {
   border-radius: 12px;
   padding: 12px 14px;
   font-size: 1rem;
+  transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav a:active {
+  background: var(--deep);
+  color: white;
+  border-color: var(--deep);
 }
 
 .nav a[aria-current="page"] {
@@ -267,10 +274,12 @@ h3 { margin: 0; font-size: 1.05rem; }
   .choice:hover,
   .link-card:hover,
   .button:hover,
-  .artist a:hover { transform: translateY(-1px); }
+  .artist a:hover,
+  .nav a:hover { transform: translateY(-1px); }
 
   .choice:hover,
-  .link-card:hover {
+  .link-card:hover,
+  .nav a:hover {
     background: var(--deep);
     color: white;
     border-color: var(--deep);
@@ -298,6 +307,9 @@ h3 { margin: 0; font-size: 1.05rem; }
 }
 
 .when {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   margin: 2px 0 8px;
   font-weight: 700;
   color: #24143a;
@@ -344,6 +356,7 @@ h3 { margin: 0; font-size: 1.05rem; }
 @media (prefers-reduced-motion: reduce) {
   .nav,
   .nav-inner,
+  .nav a,
   .choice { transition: none; }
 }
 
@@ -353,7 +366,6 @@ h3 { margin: 0; font-size: 1.05rem; }
   list-style: none;
   margin: 8px 0 0;
   padding: 0;
-  counter-reset: way;
 }
 
 .ways > li {
@@ -361,18 +373,16 @@ h3 { margin: 0; font-size: 1.05rem; }
   grid-template-columns: 2rem 1fr;
   gap: 12px;
   align-items: start;
-  counter-increment: way;
   padding: 14px 0 0;
   margin-top: 14px;
   border-top: 1px solid var(--line);
 }
 
-.ways > li::before {
-  content: counter(way);
-  font-family: Impact, Anton, "Arial Narrow", sans-serif;
+.way-icon {
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-top: 0;
   color: var(--deep);
-  font-size: 1.4rem;
-  line-height: 1.4;
 }
 
 .ways > li p { margin: 4px 0 0; }
@@ -446,6 +456,8 @@ h3 { margin: 0; font-size: 1.05rem; }
 }
 
 .map-link { margin: 0 0 10px; }
+
+.brief .plain + .map-link { margin-top: 16px; }
 
 .guest-table {
   width: 100%;

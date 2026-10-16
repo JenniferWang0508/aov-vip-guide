@@ -114,12 +114,17 @@ function home(c) {
       <div class="choices">${cards}</div>
       <section class="panel">
         <h2>${esc(h.dayTitle)}</h2>
-        <p class="when">${esc(h.when)}</p>
+        ${whenBlock(h.when)}
         ${times}
       </section>
       <div class="link-row">${links}</div>
     </article>
   `;
+}
+
+function whenBlock(when) {
+  const lines = Array.isArray(when) ? when : [when];
+  return `<p class="when">${lines.map((line) => `<span>${esc(line)}</span>`).join("")}</p>`;
 }
 
 function schedule(items) {
@@ -146,9 +151,18 @@ function schedule(items) {
   return `<div class="schedule">${cells.join("")}</div>`;
 }
 
+const TAXI_ICON = `<svg class="way-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.4 1.8h5.2c.3 0 .5.2.5.5v1.6c0 .3-.2.5-.5.5H9.4c-.3 0-.5-.2-.5-.5V2.3c0-.3.2-.5.5-.5z"/><path fill="currentColor" fill-rule="evenodd" d="M2.2 13.6V11c0-.3.1-.6.4-.9l2.2-2.4c.3-.3.7-.5 1.1-.5h2.2L9.4 5.2c.2-.4.6-.6 1-.6h3.4c.4 0 .8.2 1 .6l1.1 2h2.2c.5 0 1 .3 1.2.8l1.4 2.8c.2.4.3.8.3 1.2v2H2.2zm6.2-4.4 1-1.7h4.2l.8 1.7H8.4z"/><path fill="currentColor" fill-rule="evenodd" d="M6.1 17.6a2.15 2.15 0 1 0 0-4.3 2.15 2.15 0 0 0 0 4.3zm0-1.2a.95.95 0 1 0 0-1.9.95.95 0 0 0 0 1.9zM17.5 17.6a2.15 2.15 0 1 0 0-4.3 2.15 2.15 0 0 0 0 4.3zm0-1.2a.95.95 0 1 0 0-1.9.95.95 0 0 0 0 1.9z"/></svg>`;
+
+const MRT_ICON = `<svg class="way-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M12 2.2c-4.2 0-7.6.5-7.6 3.8v9.2c0 1.7 1.4 3.1 3.1 3.1L6.2 19.8v.5h2.1l1.7-1.9h3.9l1.7 1.9h2.1v-.5l-1.3-1.5c1.7 0 3.1-1.4 3.1-3.1V6c0-3.3-3.4-3.8-7.6-3.8zM6.2 9.8V6.2h4.6v3.6H6.2zm7 0V6.2h4.6v3.6h-4.6zM7.6 16.6a1.45 1.45 0 1 1 0-2.9 1.45 1.45 0 0 1 0 2.9zm8.8 0a1.45 1.45 0 1 1 0-2.9 1.45 1.45 0 0 1 0 2.9z"/></svg>`;
+
+function stepHtml(step) {
+  if (typeof step === "string") return esc(step);
+  return `${esc(step.before)}<strong>${esc(step.strong)}</strong>${esc(step.after || "")}`;
+}
+
 function transport(c) {
   const t = c.transport;
-  const steps = t.steps.map((step) => `<li>${esc(step)}</li>`).join("");
+  const steps = t.steps.map((step) => `<li><span>${stepHtml(step)}</span></li>`).join("");
   return shell(t.kicker, t.title, t.lede, `
     <section class="panel">
       <h2>${esc(t.name)}</h2>
@@ -157,12 +171,14 @@ function transport(c) {
       <h3 class="way-title">${esc(t.howTitle)}</h3>
       <ol class="ways">
         <li>
+          ${TAXI_ICON}
           <div>
             <strong>${esc(t.taxiTitle)}</strong>
             <p>${esc(t.taxi)}</p>
           </div>
         </li>
         <li>
+          ${MRT_ICON}
           <div>
             <strong>${esc(t.mrtTitle)}</strong>
             <ol class="steps">${steps}</ol>
@@ -230,8 +246,14 @@ function galleryButton(images, label) {
   return `<button type="button" class="text-zoom" data-gallery="${esc(JSON.stringify(images))}">${esc(label)}</button>`;
 }
 
-function markGates(text) {
-  return esc(text).replace(/Gate (\d+)/g, '<strong class="gate">Gate $1</strong>');
+function markGates(value) {
+  const images = text().gate5 || [];
+  return esc(value).replace(/Gate (\d+)/g, (match, num) => {
+    if (num === "5" && images.length) {
+      return `<button type="button" class="text-zoom gate" data-gallery="${esc(JSON.stringify(images))}">Gate 5</button>`;
+    }
+    return `<strong class="gate">Gate ${num}</strong>`;
+  });
 }
 
 function summaryBlock(block) {
@@ -243,7 +265,10 @@ function summaryBlock(block) {
   }
   if (block.kind === "list") {
     const items = block.items.map((item) => `<li>${markGates(item)}</li>`).join("");
-    return `<div><dt>${esc(block.k)}</dt><dd><ul class="plain">${items}</ul></dd></div>`;
+    const extra = block.images && block.link
+      ? `<p class="map-link">${galleryButton(block.images, block.link)}</p>`
+      : "";
+    return `<div><dt>${esc(block.k)}</dt><dd><ul class="plain">${items}</ul>${extra}</dd></div>`;
   }
   if (block.kind === "seat") {
     const places = (block.places || []).map((place) => `<li>${esc(place)}</li>`).join("");
