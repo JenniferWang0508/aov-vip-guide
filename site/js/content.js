@@ -512,7 +512,6 @@ const CONTENT = {
           photo: "images/shuhua.jpg",
           links: [
             { href: "https://open.spotify.com/artist/2AfmfGFbe0A0WsTYm0SDTx", label: "Spotify" },
-            { href: "https://www.youtube.com/@official_g_i_dle", label: "YouTube" },
           ],
         },
         {
@@ -591,7 +590,6 @@ const CONTENT = {
           photo: "images/minnie.jpg",
           links: [
             { href: "https://open.spotify.com/artist/2AfmfGFbe0A0WsTYm0SDTx", label: "Spotify" },
-            { href: "https://www.youtube.com/@official_g_i_dle", label: "YouTube" },
           ],
         },
         {
@@ -1124,7 +1122,6 @@ const CONTENT = {
           photo: "images/shuhua.jpg",
           links: [
             { href: "https://open.spotify.com/artist/2AfmfGFbe0A0WsTYm0SDTx", label: "Spotify" },
-            { href: "https://www.youtube.com/@official_g_i_dle", label: "YouTube" },
           ],
         },
         {
@@ -1203,7 +1200,6 @@ const CONTENT = {
           photo: "images/minnie.jpg",
           links: [
             { href: "https://open.spotify.com/artist/2AfmfGFbe0A0WsTYm0SDTx", label: "Spotify" },
-            { href: "https://www.youtube.com/@official_g_i_dle", label: "YouTube" },
           ],
         },
         {
