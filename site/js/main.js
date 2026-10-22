@@ -100,7 +100,19 @@ function home(c) {
       <span class="hint">${esc(card.text)}</span>
     </a>
   `).join("");
-  const times = schedule(h.timeline);
+  const stops = h.itinerary.map((item) => `
+    <li>
+      <div class="when-col">
+        <span class="date">${esc(item.date)}</span>
+        <span class="clock">${esc(item.time)}</span>
+      </div>
+      <div>
+        <strong>${esc(item.title)}${item.optional ? `<span class="optional">${esc(h.optional)}</span>` : ""}</strong>
+        <p><span class="place-tag">${esc(h.placeLabel)}</span>${esc(item.place)}</p>
+        ${item.note ? `<p class="note">${esc(item.note)}</p>` : ""}
+      </div>
+    </li>
+  `).join("");
   const links = h.links.map((item) => `
     <a class="link-card" href="${esc(item.href)}" data-page="${esc(item.href.slice(1))}">
       <strong>${esc(item.title)}</strong>
@@ -113,9 +125,8 @@ function home(c) {
       <h1>${esc(h.title)}</h1>
       <div class="choices">${cards}</div>
       <section class="panel">
-        <h2>${esc(h.dayTitle)}</h2>
-        <p class="when">${esc(h.when)}</p>
-        ${times}
+        <h2 class="star-title">${esc(h.dayTitle)}</h2>
+        <ol class="itinerary">${stops}</ol>
       </section>
       <div class="link-row">${links}</div>
     </article>
@@ -146,31 +157,41 @@ function schedule(items) {
   return `<div class="schedule">${cells.join("")}</div>`;
 }
 
+const TAXI_ICON = `<svg class="way-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.4 1.8h5.2c.3 0 .5.2.5.5v1.6c0 .3-.2.5-.5.5H9.4c-.3 0-.5-.2-.5-.5V2.3c0-.3.2-.5.5-.5z"/><path fill="currentColor" fill-rule="evenodd" d="M2.2 13.6V11c0-.3.1-.6.4-.9l2.2-2.4c.3-.3.7-.5 1.1-.5h2.2L9.4 5.2c.2-.4.6-.6 1-.6h3.4c.4 0 .8.2 1 .6l1.1 2h2.2c.5 0 1 .3 1.2.8l1.4 2.8c.2.4.3.8.3 1.2v2H2.2zm6.2-4.4 1-1.7h4.2l.8 1.7H8.4z"/><path fill="currentColor" fill-rule="evenodd" d="M6.1 17.6a2.15 2.15 0 1 0 0-4.3 2.15 2.15 0 0 0 0 4.3zm0-1.2a.95.95 0 1 0 0-1.9.95.95 0 0 0 0 1.9zM17.5 17.6a2.15 2.15 0 1 0 0-4.3 2.15 2.15 0 0 0 0 4.3zm0-1.2a.95.95 0 1 0 0-1.9.95.95 0 0 0 0 1.9z"/></svg>`;
+
+const MRT_ICON = `<svg class="way-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M12 2.2c-4.2 0-7.6.5-7.6 3.8v9.2c0 1.7 1.4 3.1 3.1 3.1L6.2 19.8v.5h2.1l1.7-1.9h3.9l1.7 1.9h2.1v-.5l-1.3-1.5c1.7 0 3.1-1.4 3.1-3.1V6c0-3.3-3.4-3.8-7.6-3.8zM6.2 9.8V6.2h4.6v3.6H6.2zm7 0V6.2h4.6v3.6h-4.6zM7.6 16.6a1.45 1.45 0 1 1 0-2.9 1.45 1.45 0 0 1 0 2.9zm8.8 0a1.45 1.45 0 1 1 0-2.9 1.45 1.45 0 0 1 0 2.9z"/></svg>`;
+
+const DRIVE_ICON = `<svg class="way-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 11.2 6.6 7a2 2 0 0 1 1.9-1.3h7a2 2 0 0 1 1.9 1.3l1.6 4.2v5.6a1 1 0 0 1-1 1h-1.1a1 1 0 0 1-1-1v-1H8.1v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-5.6zm2.4.1h9.2l-1.2-3.2a.5.5 0 0 0-.5-.3H9.1a.5.5 0 0 0-.5.3L7.4 11.3zM8.1 14.6a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5zm7.8 0a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5z"/></svg>`;
+
+function wayIcon(title) {
+  if (title === "計程車" || title === "Taxi") return TAXI_ICON;
+  if (title === "捷運" || title === "Metro") return MRT_ICON;
+  return DRIVE_ICON;
+}
+
 function transport(c) {
   const t = c.transport;
-  const steps = t.steps.map((step) => `<li>${esc(step)}</li>`).join("");
-  return shell(t.kicker, t.title, t.lede, `
-    <section class="panel">
-      <h2>${esc(t.name)}</h2>
-      <p class="address">${esc(t.address)}</p>
-      <a class="button" href="${t.mapUrl}" target="_blank" rel="noopener noreferrer">${esc(t.map)}</a>
-      <h3 class="way-title">${esc(t.howTitle)}</h3>
-      <ol class="ways">
-        <li>
-          <div>
-            <strong>${esc(t.taxiTitle)}</strong>
-            <p>${esc(t.taxi)}</p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <strong>${esc(t.mrtTitle)}</strong>
-            <ol class="steps">${steps}</ol>
-          </div>
-        </li>
-      </ol>
-    </section>
-  `);
+  const panels = t.places.map((place) => {
+    const ways = place.ways.map((way) => {
+      const body = way.steps
+        ? `<ol class="steps">${way.steps.map((step) => `<li>${esc(step)}</li>`).join("")}</ol>`
+        : way.items
+          ? `<ul class="plain">${way.items.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>`
+          : `<p>${esc(way.text)}</p>`;
+      return `<li>${wayIcon(way.title)}<div><strong>${esc(way.title)}</strong>${body}</div></li>`;
+    }).join("");
+    return `
+      <section class="panel">
+        <h2>${esc(place.name)}</h2>
+        ${place.note ? `<p class="note">${esc(place.note)}</p>` : ""}
+        <p class="address">${esc(place.address)}</p>
+        <a class="button" href="${place.mapUrl}" target="_blank" rel="noopener noreferrer">${esc(t.map)}</a>
+        <h3 class="way-title">${esc(t.howTitle)}</h3>
+        <ol class="ways">${ways}</ol>
+      </section>
+    `;
+  }).join("");
+  return shell(t.kicker, t.title, t.lede, panels);
 }
 
 function factList(facts) {
@@ -230,8 +251,26 @@ function galleryButton(images, label) {
   return `<button type="button" class="text-zoom" data-gallery="${esc(JSON.stringify(images))}">${esc(label)}</button>`;
 }
 
-function markGates(text) {
-  return esc(text).replace(/Gate (\d+)/g, '<strong class="gate">Gate $1</strong>');
+function markGates(value) {
+  const images = text().gate5 || [];
+  return esc(value).replace(/Gate (\d+)/g, (match, num) => {
+    if (num === "5" && images.length) {
+      return `<button type="button" class="text-zoom gate" data-gallery="${esc(JSON.stringify(images))}">Gate 5</button>`;
+    }
+    return `<strong class="gate">Gate ${num}</strong>`;
+  });
+}
+
+function rich(value) {
+  const parts = Array.isArray(value) ? value : [{ text: value }];
+  return parts.map((part) => {
+    const text = markGates(part.text || "");
+    if (part.break) return "<br>";
+    if (part.images) return galleryButton(part.images, part.text);
+    if (part.image) return zoomButton(part.image, part.text);
+    if (!part.href) return text;
+    return `<a href="${esc(part.href)}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+  }).join("");
 }
 
 function summaryBlock(block) {
@@ -239,11 +278,27 @@ function summaryBlock(block) {
     return `<div><dt>${esc(block.k)}</dt><dd>${esc(block.v)}（<a href="#${esc(block.page)}" data-page="${esc(block.page)}">${esc(block.link)}</a>）</dd></div>`;
   }
   if (block.kind === "text") {
-    return `<div><dt>${esc(block.k)}</dt><dd>${esc(block.v)}</dd></div>`;
+    const label = block.k ? `<dt>${esc(block.k)}</dt>` : "";
+    const small = block.small ? ` class="small"` : "";
+    return `<div>${label}<dd${small}>${rich(block.v)}</dd></div>`;
   }
   if (block.kind === "list") {
-    const items = block.items.map((item) => `<li>${markGates(item)}</li>`).join("");
-    return `<div><dt>${esc(block.k)}</dt><dd><ul class="plain">${items}</ul></dd></div>`;
+    const items = block.items.map((item) => `<li>${typeof item === "string" ? markGates(item) : rich(Array.isArray(item) ? item : [item])}</li>`).join("");
+    const extra = block.images && block.link ? `<p class="map-link">${galleryButton(block.images, block.link)}</p>` : "";
+    return `<div><dt>${esc(block.k)}</dt><dd><ul class="plain">${items}</ul>${extra}</dd></div>`;
+  }
+  if (block.kind === "ext") {
+    const items = block.items.map((item) => `<li>${Array.isArray(item) ? rich(item) : `<a href="${esc(item.href)}" target="_blank" rel="noopener noreferrer">${esc(item.text)}</a>`}</li>`).join("");
+    const label = block.k ? `<dt>${esc(block.k)}</dt>` : "";
+    return `<div>${label}<dd><ul class="plain">${items}</ul></dd></div>`;
+  }
+  if (block.kind === "media") {
+    const sep = currentLang() === "en" ? ", " : "、";
+    const buttons = block.items.map((item) => (
+      item.images.length > 1 ? galleryButton(item.images, item.label) : zoomButton(item.images[0], item.label)
+    )).join(block.items.length > 1 ? sep : "");
+    const label = block.k ? `<dt>${esc(block.k)}</dt>` : "";
+    return `<div>${label}<dd class="embeds">${buttons}</dd></div>`;
   }
   if (block.kind === "seat") {
     const places = (block.places || []).map((place) => `<li>${esc(place)}</li>`).join("");
@@ -311,6 +366,13 @@ function guide(block, c) {
   return shell(block.kicker, block.title, block.intro, block.events.map((event) => renderEvent(event, c.zoom)).join(""));
 }
 
+function bioHtml(bio) {
+  if (Array.isArray(bio) && Array.isArray(bio[0])) {
+    return `<ul class="bio-points">${bio.map((point) => `<li>${rich(point)}</li>`).join("")}</ul>`;
+  }
+  return `<p class="bio">${rich(bio)}</p>`;
+}
+
 function artistCard(artist) {
   const en = currentLang() === "en" && artist.en ? `<p class="en-name">${esc(artist.en)}</p>` : "";
   const links = (artist.links || []).map((item) =>
@@ -323,7 +385,7 @@ function artistCard(artist) {
         <h3>${esc(artist.name)}</h3>
         ${en}
         <p class="role">${esc(artist.role)}</p>
-        <p>${esc(artist.bio)}</p>
+        ${bioHtml(artist.bio)}
         <p class="artist-links">${links}</p>
       </div>
     </article>

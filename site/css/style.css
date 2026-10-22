@@ -245,7 +245,7 @@ h3 { margin: 0; font-size: 1.05rem; }
 }
 
 .button,
-.artist a { transition: transform 0.15s ease; }
+.artist-links a { transition: transform 0.15s ease; }
 
 .choice,
 .link-card {
@@ -267,7 +267,7 @@ h3 { margin: 0; font-size: 1.05rem; }
   .choice:hover,
   .link-card:hover,
   .button:hover,
-  .artist a:hover { transform: translateY(-1px); }
+  .artist-links a:hover { transform: translateY(-1px); }
 
   .choice:hover,
   .link-card:hover {
@@ -353,7 +353,6 @@ h3 { margin: 0; font-size: 1.05rem; }
   list-style: none;
   margin: 8px 0 0;
   padding: 0;
-  counter-reset: way;
 }
 
 .ways > li {
@@ -361,21 +360,20 @@ h3 { margin: 0; font-size: 1.05rem; }
   grid-template-columns: 2rem 1fr;
   gap: 12px;
   align-items: start;
-  counter-increment: way;
   padding: 14px 0 0;
   margin-top: 14px;
   border-top: 1px solid var(--line);
 }
 
-.ways > li::before {
-  content: counter(way);
-  font-family: Impact, Anton, "Arial Narrow", sans-serif;
+.way-icon {
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-top: 0;
   color: var(--deep);
-  font-size: 1.4rem;
-  line-height: 1.4;
 }
 
-.ways > li p { margin: 4px 0 0; }
+.ways > li p,
+.ways .plain { margin: 4px 0 0; }
 
 .ways .steps { margin-top: 4px; }
 
@@ -469,6 +467,17 @@ h3 { margin: 0; font-size: 1.05rem; }
   font-weight: 700;
 }
 
+dd.small {
+  color: #5c4778;
+  font-size: 0.86rem;
+}
+
+.embeds {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
 .fine {
   display: flex;
   align-items: center;
@@ -537,13 +546,13 @@ h3 { margin: 0; font-size: 1.05rem; }
 .boxes em { font-style: normal; font-weight: 700; }
 
 .button,
-.artist a,
+.artist-links a,
 .zoom {
   font: inherit;
 }
 
 .button,
-.artist a {
+.artist-links a {
   display: inline-flex;
   align-items: center;
   margin-top: 14px;
@@ -563,6 +572,87 @@ h3 { margin: 0; font-size: 1.05rem; }
 }
 
 .artist-links a { margin-top: 0; }
+
+.bio a,
+.bio-points a,
+.plain a,
+.brief dd > a,
+dd.small a {
+  color: var(--deep);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.star-title::before {
+  content: "";
+  display: inline-block;
+  width: 0.72em;
+  height: 0.72em;
+  margin-right: 0.4em;
+  background: var(--deep);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  vertical-align: 0.08em;
+}
+
+.itinerary {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+}
+
+.itinerary li {
+  display: grid;
+  grid-template-columns: 9.6rem minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 16px 0 0;
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.itinerary li:first-child { margin-top: 8px; }
+
+.itinerary .date,
+.itinerary .clock {
+  display: block;
+  font-family: Impact, Anton, "Arial Narrow", sans-serif;
+  color: var(--deep);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.itinerary .date { font-size: 1.35rem; line-height: 1.15; }
+
+.itinerary .clock { margin-top: 6px; font-size: 1.05rem; }
+
+.itinerary strong { font-size: 1.15rem; line-height: 1.25; }
+
+.itinerary p { margin: 4px 0 0; font-size: 0.95rem; }
+
+.optional {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--blush);
+  color: var(--deep);
+  font-size: 0.75rem;
+  font-weight: 700;
+  vertical-align: 2px;
+}
+
+.place-tag {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #e4dff8;
+  color: #6a5ad4;
+  font-size: 0.75rem;
+  font-weight: 700;
+  vertical-align: 2px;
+}
 
 .zoom-hint {
   margin: 18px 0 8px;
@@ -631,6 +721,13 @@ figcaption {
 .role { font-weight: 700; }
 
 .artist p:last-of-type { margin: 8px 0 0; }
+
+.bio-points {
+  margin: 8px 0 0;
+  padding-left: 1.15rem;
+}
+
+.bio-points li + li { margin-top: 6px; }
 
 dialog {
   width: fit-content;
@@ -720,6 +817,15 @@ button:focus-visible {
     padding: 6px;
     font-size: 0.86rem;
   }
+
+  .itinerary li {
+    grid-template-columns: 8.4rem minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .itinerary .date { font-size: 1.05rem; }
+
+  .itinerary .clock { font-size: 0.92rem; }
 
   .guest-table th,
   .guest-table td { padding: 8px 6px; }
